@@ -1,3 +1,5 @@
+#smrmaak
+
 from typing import Optional
 import random
 from random import randint
@@ -9,7 +11,6 @@ class MyClient(discord.Client):
         super().__init__(intents=intents)
         self.tree = app_commands.CommandTree(self)
 
-        # CoinManager 인스턴스 생성
         self.coin_manager = CoinManager()
 
     async def on_ready(self):
@@ -43,21 +44,17 @@ class CoinManager:
             raise ValueError("코인이 없다!")
 
     def gamble_coins(self, user_id: int, amount: int) -> int:
-        # Define gambling probabilities
         outcome = random.randint(1, 100)
 
         if outcome <= 49:
-            # Win 2x
             winnings = amount * 2
             self.add_coins(user_id, winnings)
             return winnings
         elif outcome == 50:
-            # Win 10x
             winnings = amount * 10
             self.add_coins(user_id, winnings)
             return winnings
         else:
-            # Lose
             self.remove_coins(user_id, amount)
             return -amount
 
@@ -123,4 +120,4 @@ async def gamble_coins(interaction: discord.Interaction, amount: int):
     except ValueError:
         await interaction.response.send_message(f'{interaction.user.mention} 없는 형편에 도박질이냐?')
 
-client.run('토큰 처넣기')
+client.run('토큰 처넣어라')
